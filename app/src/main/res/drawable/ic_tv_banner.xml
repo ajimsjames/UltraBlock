@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+    <path
+        android:fillColor="#0A0A0E"
+        android:pathData="M0,0h320v180h-320z"/>
+    <!-- Outer Shield Glow -->
+    <path
+        android:fillColor="#1510B981"
+        android:pathData="M160,35L110,58v35c0,32.4 22.4,62.6 50,70c27.6,-7.4 50,-37.6 50,-70V58L160,35z"/>
+    <!-- Shield -->
+    <path
+        android:fillColor="#16161D"
+        android:strokeColor="#10B981"
+        android:strokeWidth="3.5"
+        android:pathData="M160,42L116,62v32c0,28 19.4,54 44,60.4c24.6,-6.4 44,-32.4 44,-60.4V62L160,42z"/>
+    <!-- Bolt -->
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M164,65L142,95h16l-5,32l25,-35h-17l10,-27z"/>
+</vector>

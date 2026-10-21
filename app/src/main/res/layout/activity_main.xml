@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-black"
+            android:letterSpacing="0.08"
+            android:text="ULTRABLOCK"
+            android:textColor="@color/accent_white"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:letterSpacing="0.02"
+            android:text="System &amp; Smart TV Firewall &amp; Telemetry Sinkhole"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
+        <!-- Power Button (D-Pad Focusable for Android TV Remote) -->
+        <FrameLayout
+            android:id="@+id/btnToggleShield"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/bg_shield_circle"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/imgShieldIcon"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_tile_shield"
+                app:tint="@color/accent_green" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/txtStatusTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.05"
+            android:text="@string/shield_off"
+            android:textColor="@color/accent_white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txtStatusSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/status_subtitle"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
+        <!-- Stats Card Grid -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@color/card_dark"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:id="@+id/txtBlockedCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="0"
+                    android:textColor="@color/accent_green"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="SINKHOLED"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@color/card_dark"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:id="@+id/txtProcessedCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="0"
+                    android:textColor="@color/accent_white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="TOTAL QUERIES"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Button to open Per-App Blocked Statistics Window (Focusable for TV Remote) -->
+        <Button
+            android:id="@+id/btnOpenAppStats"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/card_dark"
+            android:focusable="true"
+            android:fontFamily="sans-serif-bold"
+            android:letterSpacing="0.04"
+            android:text="VIEW BLOCKED ADS PER APP"
+            android:textColor="@color/accent_green"
+            android:textSize="13sp" />
+
+        <!-- Last Blocked Info -->
+        <TextView
+            android:id="@+id/txtLastBlocked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:text="Ready"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <!-- Firewall Category Toggles Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="sans-serif-black"
+            android:letterSpacing="0.06"
+            android:text="TELEMETRY &amp; SERVER FILTERS"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@color/card_dark"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <!-- Smart TV ACR & Sony Bravia Telemetry -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchBlockSmartTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:text="Block Smart TV &amp; Samba ACR Telemetry"
+                android:textColor="@color/accent_white"
+                android:textSize="13sp"
+                app:useMaterialThemeColors="false" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/card_stroke" />
+
+            <!-- Mobile & TV In-App Ad Networks (Google, Vungle, AppLovin, IronSource) -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchBlockInAppAds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:text="Block In-App &amp; TV Ad Networks (Vungle / AppLovin / InMobi)"
+                android:textColor="@color/accent_white"
+                android:textSize="13sp"
+                app:useMaterialThemeColors="false" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/card_stroke" />
+
+            <!-- Mobile App Trackers (Flipkart, Swiggy, Zomato, Botim) -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchBlockAppTrackers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:text="Block App Trackers (AppsFlyer / CleverTap / MoEngage / Adjust)"
+                android:textColor="@color/accent_white"
+                android:textSize="13sp"
+                app:useMaterialThemeColors="false" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/card_stroke" />
+
+            <!-- WPS Office Switch -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchBlockWps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:text="Block WPS Office / Kingsoft Servers"
+                android:textColor="@color/accent_white"
+                android:textSize="13sp"
+                app:useMaterialThemeColors="false" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/card_stroke" />
+
+            <!-- Realme / Oppo Switch -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchBlockRealme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:text="Block Realme &amp; HeyTap Telemetry"
+                android:textColor="@color/accent_white"
+                android:textSize="13sp"
+                app:useMaterialThemeColors="false" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/card_stroke" />
+
+            <!-- Meta / Facebook Switch -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchBlockMeta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:text="Block Meta / Facebook Graph &amp; Trackers"
+                android:textColor="@color/accent_white"
+                android:textSize="13sp"
+                app:useMaterialThemeColors="false" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/card_stroke" />
+
+            <!-- Xiaomi / MIUI Switch -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchBlockXiaomi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:text="Block Xiaomi &amp; MIUI Telemetry"
+                android:textColor="@color/accent_white"
+                android:textSize="13sp"
+                app:useMaterialThemeColors="false" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/card_stroke" />
+
+            <!-- ByteDance / TikTok Switch -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchBlockBytedance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:text="Block ByteDance / TikTok Tracking"
+                android:textColor="@color/accent_white"
+                android:textSize="13sp"
+                app:useMaterialThemeColors="false" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

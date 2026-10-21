@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0A0E"
+    android:orientation="horizontal"
+    android:padding="32dp">
+
+    <!-- LEFT PANEL: Shield, Status & Navigation Action -->
+    <LinearLayout
+        android:layout_width="440dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingEnd="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:letterSpacing="0.08"
+            android:text="ULTRABLOCK TV"
+            android:textColor="@color/accent_white"
+            android:textSize="28sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Smart TV Firewall &amp; ACR Sinkhole"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- TV Big Focusable Shield Button -->
+        <FrameLayout
+            android:id="@+id/btnToggleShield"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:background="@drawable/bg_tv_shield_selector"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/imgShieldIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_tile_shield"
+                app:tint="@color/accent_green" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/txtStatusTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-black"
+            android:letterSpacing="0.06"
+            android:text="@string/shield_off"
+            android:textColor="@color/accent_white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txtStatusSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="563K rules protecting TV"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Big TV Action Button -->
+        <Button
+            android:id="@+id/btnOpenAppStats"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/bg_tv_button_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="sans-serif-bold"
+            android:letterSpacing="0.05"
+            android:text="VIEW BLOCKED ADS PER APP"
+            android:textColor="@color/accent_white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtLastBlocked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:text="Ready"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#20202C" />
+
+    <!-- RIGHT PANEL: Live HUD Stats & Focusable Filter Grid -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="32dp">
+
+        <!-- Top Telemetry Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_tv_card_selector"
+                android:focusable="false"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/txtBlockedCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="0"
+                    android:textColor="@color/accent_green"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:letterSpacing="0.04"
+                    android:text="ADS &amp; TRACKERS SINKHOLED"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_tv_card_selector"
+                android:focusable="false"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/txtProcessedCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="0"
+                    android:textColor="@color/accent_white"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:letterSpacing="0.04"
+                    android:text="TOTAL QUERIES INSPECTED"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-black"
+            android:letterSpacing="0.06"
+            android:text="REMOTE CONTROLLABLE FILTER MODULES"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <!-- Scrollable D-Pad Navigable Toggles for TV Remote -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockSmartTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/bg_tv_card_selector"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="16dp"
+                    android:text="Block Smart TV &amp; Samba ACR Telemetry"
+                    android:textColor="@color/accent_white"
+                    android:textSize="14sp"
+                    app:useMaterialThemeColors="false" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockInAppAds"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/bg_tv_card_selector"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="16dp"
+                    android:text="Block In-App &amp; TV Ad Networks (Vungle / AppLovin / InMobi)"
+                    android:textColor="@color/accent_white"
+                    android:textSize="14sp"
+                    app:useMaterialThemeColors="false" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockAppTrackers"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/bg_tv_card_selector"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="16dp"
+                    android:text="Block App Trackers (AppsFlyer / CleverTap / MoEngage / Adjust)"
+                    android:textColor="@color/accent_white"
+                    android:textSize="14sp"
+                    app:useMaterialThemeColors="false" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockWps"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/bg_tv_card_selector"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="16dp"
+                    android:text="Block WPS Office / Kingsoft Servers"
+                    android:textColor="@color/accent_white"
+                    android:textSize="14sp"
+                    app:useMaterialThemeColors="false" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockRealme"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/bg_tv_card_selector"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="16dp"
+                    android:text="Block Realme &amp; HeyTap Telemetry"
+                    android:textColor="@color/accent_white"
+                    android:textSize="14sp"
+                    app:useMaterialThemeColors="false" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockMeta"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/bg_tv_card_selector"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="16dp"
+                    android:text="Block Meta / Facebook Graph &amp; Trackers"
+                    android:textColor="@color/accent_white"
+                    android:textSize="14sp"
+                    app:useMaterialThemeColors="false" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockXiaomi"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/bg_tv_card_selector"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="16dp"
+                    android:text="Block Xiaomi &amp; MIUI Telemetry"
+                    android:textColor="@color/accent_white"
+                    android:textSize="14sp"
+                    app:useMaterialThemeColors="false" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockBytedance"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/bg_tv_card_selector"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="16dp"
+                    android:text="Block ByteDance / TikTok Tracking"
+                    android:textColor="@color/accent_white"
+                    android:textSize="14sp"
+                    app:useMaterialThemeColors="false" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>

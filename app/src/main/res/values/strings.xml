@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UltraBlock</string>
+    <string name="tile_name">UltraBlock</string>
+    <string name="shield_on">SHIELD ACTIVE</string>
+    <string name="shield_off">SHIELD PAUSED</string>
+    <string name="status_subtitle">563,061 rules protecting network &amp; telemetry</string>
+</resources>
