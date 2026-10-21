@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Night Theme: Deep Pitch Obsidian Black Surface -->
+    <color name="theme_bg">#090A0F</color>
+    <color name="theme_card">#12141D</color>
+    <color name="theme_card_stroke">#222638</color>
+    <color name="theme_pill">#181B26</color>
+    <color name="theme_pill_stroke">#2A3047</color>
+    <color name="theme_shield_bg">#12141D</color>
+    <color name="theme_shield_stroke">#F8FAFC</color>
+
+    <!-- Typography (Night: Crisp Pure White & Slate) -->
+    <color name="text_primary">#F8FAFC</color>
+    <color name="text_secondary">#94A3B8</color>
+    <color name="text_muted">#64748B</color>
+    <color name="icon_tint">#F8FAFC</color>
+
+    <!-- Dividers & Accents -->
+    <color name="divider_color">#1E2333</color>
+    <color name="badge_blocked_bg">#291418</color>
+    <color name="badge_blocked_text">#F87171</color>
+    <color name="badge_allowed_bg">#0D2818</color>
+    <color name="badge_allowed_text">#4ADE80</color>
+
+    <!-- Backward Compatibility -->
+    <color name="bg_dark">#090A0F</color>
+    <color name="card_dark">#12141D</color>
+    <color name="card_stroke">#222638</color>
+    <color name="accent_white">#F8FAFC</color>
+    <color name="accent_green">#10B981</color>
+    <color name="accent_red">#EF4444</color>
+</resources>

@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.net.Uri
 import android.net.VpnService
 import android.os.Build
@@ -150,7 +149,7 @@ class MainActivity : AppCompatActivity() {
         val names = providers.map { "${it.displayName}\n${it.description}" }.toTypedArray()
         val currentIndex = providers.indexOf(DnsProviderManager.currentProvider)
 
-        AlertDialog.Builder(this, com.google.android.material.R.style.Theme_MaterialComponents_DayNight_Dialog_Alert)
+        AlertDialog.Builder(this)
             .setTitle("Select Upstream DNS Resolver")
             .setSingleChoiceItems(names, currentIndex) { dialog, which ->
                 val selected = providers[which]
@@ -187,7 +186,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } else {
                 btnBatteryOpt.text = "OPTIMIZED"
-                btnBatteryOpt.setTextColor(Color.parseColor("#FFFFFF"))
+                btnBatteryOpt.setTextColor(ContextCompat.getColor(this, R.color.text_primary))
             }
         }
     }
@@ -239,24 +238,24 @@ class MainActivity : AppCompatActivity() {
     private fun updateUiState() {
         val active = UltraVpnService.isRunning.get()
         val isSnoozed = SnoozeManager.isSnoozed()
-        val white = Color.parseColor("#FFFFFF")
-        val slate = Color.parseColor("#94A3B8")
+        val primaryColor = ContextCompat.getColor(this, R.color.text_primary)
+        val secondaryColor = ContextCompat.getColor(this, R.color.text_secondary)
 
         if (isSnoozed) {
             val rem = SnoozeManager.getRemainingMinutes()
             txtStatusTitle.text = "PAUSED ($rem MIN REMAINING)"
-            txtStatusTitle.setTextColor(slate)
-            imgShieldIcon.imageTintList = ColorStateList.valueOf(slate)
+            txtStatusTitle.setTextColor(secondaryColor)
+            imgShieldIcon.imageTintList = ColorStateList.valueOf(secondaryColor)
             txtStatusSubtitle.text = "Protection temporarily paused. Tap to resume."
         } else if (active) {
             txtStatusTitle.text = getString(R.string.shield_on)
-            txtStatusTitle.setTextColor(white)
-            imgShieldIcon.imageTintList = ColorStateList.valueOf(white)
+            txtStatusTitle.setTextColor(primaryColor)
+            imgShieldIcon.imageTintList = ColorStateList.valueOf(primaryColor)
             txtStatusSubtitle.text = getString(R.string.status_subtitle)
         } else {
             txtStatusTitle.text = getString(R.string.shield_off)
-            txtStatusTitle.setTextColor(slate)
-            imgShieldIcon.imageTintList = ColorStateList.valueOf(slate)
+            txtStatusTitle.setTextColor(secondaryColor)
+            imgShieldIcon.imageTintList = ColorStateList.valueOf(secondaryColor)
             txtStatusSubtitle.text = getString(R.string.status_subtitle)
         }
         updateStats()

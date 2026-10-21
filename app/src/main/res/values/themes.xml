@@ -1,13 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.UltraBlock" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/accent_white</item>
-        <item name="colorPrimaryVariant">#334155</item>
-        <item name="colorOnPrimary">#000000</item>
-        <item name="colorSecondary">@color/accent_green</item>
-        <item name="colorSecondaryVariant">#059669</item>
-        <item name="colorOnSecondary">#000000</item>
-        <item name="android:statusBarColor">@color/bg_dark</item>
-        <item name="android:navigationBarColor">@color/bg_dark</item>
-        <item name="android:windowBackground">@color/bg_dark</item>
+        <item name="colorPrimary">@color/text_primary</item>
+        <item name="colorPrimaryVariant">@color/theme_card_stroke</item>
+        <item name="colorOnPrimary">@color/theme_bg</item>
+        <item name="colorSecondary">@color/text_primary</item>
+        <item name="colorSecondaryVariant">@color/text_secondary</item>
+        <item name="colorOnSecondary">@color/theme_bg</item>
+        <item name="android:statusBarColor">@color/theme_bg</item>
+        <item name="android:navigationBarColor">@color/theme_bg</item>
+        <item name="android:windowBackground">@color/theme_bg</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 </resources>

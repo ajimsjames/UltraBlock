@@ -1,11 +1,11 @@
 package com.ultrablock.app.ui
 
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ultrablock.app.R
 import com.ultrablock.app.data.QueryLogItem
@@ -36,6 +36,7 @@ class QueryLogAdapter(private val items: MutableList<QueryLogItem>) :
         val appInfo = item.packageName ?: "System / Background Service"
         holder.txtApp.text = "$appInfo • $timeStr"
 
+        val context = holder.itemView.context
         val badgeDrawable = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = 5f * holder.itemView.resources.displayMetrics.density
@@ -43,14 +44,12 @@ class QueryLogAdapter(private val items: MutableList<QueryLogItem>) :
 
         if (item.isBlocked) {
             holder.txtBadge.text = "SINKHOLED"
-            holder.txtBadge.setTextColor(Color.parseColor("#F87171"))
-            badgeDrawable.setColor(Color.parseColor("#1FEF4444"))
-            badgeDrawable.setStroke(1, Color.parseColor("#4DE879F9"))
+            holder.txtBadge.setTextColor(ContextCompat.getColor(context, R.color.badge_blocked_text))
+            badgeDrawable.setColor(ContextCompat.getColor(context, R.color.badge_blocked_bg))
         } else {
             holder.txtBadge.text = "ALLOWED"
-            holder.txtBadge.setTextColor(Color.parseColor("#CBD5E1"))
-            badgeDrawable.setColor(Color.parseColor("#14FFFFFF"))
-            badgeDrawable.setStroke(1, Color.parseColor("#26FFFFFF"))
+            holder.txtBadge.setTextColor(ContextCompat.getColor(context, R.color.badge_allowed_text))
+            badgeDrawable.setColor(ContextCompat.getColor(context, R.color.badge_allowed_bg))
         }
         holder.txtBadge.background = badgeDrawable
     }

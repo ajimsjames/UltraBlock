@@ -4,21 +4,19 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:paddingVertical="6dp"
+    android:paddingVertical="7dp"
     android:paddingHorizontal="6dp">
 
     <!-- Status indicator badge -->
     <TextView
         android:id="@+id/txtStatusBadge"
-        android:layout_width="68dp"
+        android:layout_width="72dp"
         android:layout_height="22dp"
         android:gravity="center"
         android:fontFamily="sans-serif-black"
         android:textSize="9sp"
         android:letterSpacing="0.04"
-        android:text="BLOCKED"
-        android:textColor="@color/accent_white"
-        android:background="@drawable/bg_pill_button" />
+        android:text="BLOCKED" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -33,7 +31,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:textSize="13sp"
-            android:textColor="@color/accent_white"
+            android:textColor="@color/text_primary"
             android:singleLine="true"
             android:ellipsize="middle"
             android:text="telemetry.sony.com" />
