@@ -7,22 +7,33 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.net.Uri
 import android.net.VpnService
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Button
+import android.os.PowerManager
+import android.provider.Settings
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ultrablock.app.data.BlockStatsManager
+import com.ultrablock.app.data.DnsProviderManager
+import com.ultrablock.app.data.QueryLogManager
+import com.ultrablock.app.data.SnoozeManager
+import com.ultrablock.app.data.UpstreamDns
 import com.ultrablock.app.dns.DomainFilter
 import com.ultrablock.app.service.UltraVpnService
 import com.ultrablock.app.ui.AppStatsActivity
+import com.ultrablock.app.ui.QueryLogAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,8 +43,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var txtStatusSubtitle: TextView
     private lateinit var txtBlockedCount: TextView
     private lateinit var txtProcessedCount: TextView
-    private lateinit var txtLastBlocked: TextView
-    private lateinit var btnOpenAppStats: Button
+    private lateinit var txtBlockRate: TextView
+    private lateinit var btnChangeDns: TextView
+    private lateinit var btnOpenAppStats: TextView
+    private lateinit var btnBatteryOpt: TextView
+    private lateinit var btnSnooze5m: TextView
+    private lateinit var btnSnooze15m: TextView
+    private lateinit var btnSnooze1h: TextView
+    private lateinit var txtClearLog: TextView
+
+    private lateinit var recyclerQueryLogs: RecyclerView
+    private lateinit var queryLogAdapter: QueryLogAdapter
 
     private lateinit var switchBlockSmartTv: SwitchMaterial
     private lateinit var switchBlockInAppAds: SwitchMaterial
@@ -72,6 +92,8 @@ class MainActivity : AppCompatActivity() {
 
         DomainFilter.load(applicationContext)
         BlockStatsManager.init(applicationContext)
+        DnsProviderManager.init(applicationContext)
+        SnoozeManager.init(applicationContext)
 
         btnToggleShield = findViewById(R.id.btnToggleShield)
         imgShieldIcon = findViewById(R.id.imgShieldIcon)
@@ -79,8 +101,19 @@ class MainActivity : AppCompatActivity() {
         txtStatusSubtitle = findViewById(R.id.txtStatusSubtitle)
         txtBlockedCount = findViewById(R.id.txtBlockedCount)
         txtProcessedCount = findViewById(R.id.txtProcessedCount)
-        txtLastBlocked = findViewById(R.id.txtLastBlocked)
+        txtBlockRate = findViewById(R.id.txtBlockRate)
+        btnChangeDns = findViewById(R.id.btnChangeDns)
         btnOpenAppStats = findViewById(R.id.btnOpenAppStats)
+        btnBatteryOpt = findViewById(R.id.btnBatteryOpt)
+        btnSnooze5m = findViewById(R.id.btnSnooze5m)
+        btnSnooze15m = findViewById(R.id.btnSnooze15m)
+        btnSnooze1h = findViewById(R.id.btnSnooze1h)
+        txtClearLog = findViewById(R.id.txtClearLog)
+
+        recyclerQueryLogs = findViewById(R.id.recyclerQueryLogs)
+        recyclerQueryLogs.layoutManager = LinearLayoutManager(this)
+        queryLogAdapter = QueryLogAdapter(mutableListOf())
+        recyclerQueryLogs.adapter = queryLogAdapter
 
         switchBlockSmartTv = findViewById(R.id.switchBlockSmartTv)
         switchBlockInAppAds = findViewById(R.id.switchBlockInAppAds)
@@ -96,11 +129,80 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnOpenAppStats.setOnClickListener {
-            val intent = Intent(this, AppStatsActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, AppStatsActivity::class.java))
         }
 
+        btnChangeDns.setOnClickListener {
+            showDnsSelectionDialog()
+        }
+
+        btnSnooze5m.setOnClickListener { snoozeShield(5) }
+        btnSnooze15m.setOnClickListener { snoozeShield(15) }
+        btnSnooze1h.setOnClickListener { snoozeShield(60) }
+
+        txtClearLog.setOnClickListener {
+            QueryLogManager.clear()
+            queryLogAdapter.updateData(emptyList())
+        }
+
+        btnBatteryOpt.setOnClickListener {
+            requestBatteryOptimizationExemption()
+        }
+
+        updateDnsButtonText()
         setupCategoryToggles()
+    }
+
+    private fun updateDnsButtonText() {
+        val prov = DnsProviderManager.currentProvider
+        btnChangeDns.text = "DNS: ${prov.ip} ▾"
+    }
+
+    private fun showDnsSelectionDialog() {
+        val providers = UpstreamDns.values()
+        val names = providers.map { "${it.displayName}\n${it.description}" }.toTypedArray()
+        val currentIndex = providers.indexOf(DnsProviderManager.currentProvider)
+
+        AlertDialog.Builder(this, com.google.android.material.R.style.Theme_MaterialComponents_DayNight_Dialog_Alert)
+            .setTitle("Select Upstream DNS Resolver")
+            .setSingleChoiceItems(names, currentIndex) { dialog, which ->
+                val selected = providers[which]
+                DnsProviderManager.setProvider(this, selected)
+                updateDnsButtonText()
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun snoozeShield(minutes: Int) {
+        if (SnoozeManager.isSnoozed()) {
+            SnoozeManager.cancelSnooze(this)
+        } else {
+            SnoozeManager.snooze(this, minutes)
+        }
+        updateUiState()
+    }
+
+    private fun requestBatteryOptimizationExemption() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val pm = getSystemService(Context.POWER_SERVICE) as? PowerManager
+            if (pm != null && !pm.isIgnoringBatteryOptimizations(packageName)) {
+                try {
+                    val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                        data = Uri.parse("package:$packageName")
+                    }
+                    startActivity(intent)
+                } catch (_: Exception) {
+                    try {
+                        startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+                    } catch (_: Exception) {}
+                }
+            } else {
+                btnBatteryOpt.text = "OPTIMIZED"
+                btnBatteryOpt.setTextColor(Color.parseColor("#FFFFFF"))
+            }
+        }
     }
 
     private fun setupCategoryToggles() {
@@ -185,28 +287,43 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateUiState() {
         val active = UltraVpnService.isRunning.get()
-        val green = Color.parseColor("#10B981")
+        val isSnoozed = SnoozeManager.isSnoozed()
+        val white = Color.parseColor("#FFFFFF")
         val slate = Color.parseColor("#94A3B8")
 
-        if (active) {
+        if (isSnoozed) {
+            val rem = SnoozeManager.getRemainingMinutes()
+            txtStatusTitle.text = "PAUSED ($rem MIN REMAINING)"
+            txtStatusTitle.setTextColor(slate)
+            imgShieldIcon.imageTintList = ColorStateList.valueOf(slate)
+            txtStatusSubtitle.text = "Protection temporarily paused. Tap to resume."
+        } else if (active) {
             txtStatusTitle.text = getString(R.string.shield_on)
-            txtStatusTitle.setTextColor(green)
-            imgShieldIcon.imageTintList = ColorStateList.valueOf(green)
+            txtStatusTitle.setTextColor(white)
+            imgShieldIcon.imageTintList = ColorStateList.valueOf(white)
+            txtStatusSubtitle.text = getString(R.string.status_subtitle)
         } else {
             txtStatusTitle.text = getString(R.string.shield_off)
-            txtStatusTitle.setTextColor(Color.WHITE)
+            txtStatusTitle.setTextColor(slate)
             imgShieldIcon.imageTintList = ColorStateList.valueOf(slate)
+            txtStatusSubtitle.text = getString(R.string.status_subtitle)
         }
         updateStats()
     }
 
     private fun updateStats() {
-        txtBlockedCount.text = UltraVpnService.adsBlocked.get().toString()
-        txtProcessedCount.text = UltraVpnService.queriesProcessed.get().toString()
+        val blocked = UltraVpnService.adsBlocked.get()
+        val total = UltraVpnService.queriesProcessed.get()
+        txtBlockedCount.text = blocked.toString()
+        txtProcessedCount.text = total.toString()
 
-        val last = UltraVpnService.lastBlockedDomain
-        if (last != null) {
-            txtLastBlocked.text = "Last sinkholed: $last"
+        val rate = if (total > 0) ((blocked.toDouble() / total.toDouble()) * 100).toInt() else 0
+        txtBlockRate.text = "$rate%"
+
+        // Refresh live query stream
+        val logs = QueryLogManager.getLogs()
+        if (logs.isNotEmpty()) {
+            queryLogAdapter.updateData(logs)
         }
     }
 }

@@ -135,7 +135,7 @@ class UltraVpnService : VpnService() {
             Log.e("UltraVpnService", "Error creating upstream socket", e)
         }
 
-        val upstreamDns = InetAddress.getByName("1.1.1.1")
+        val upstreamDns = com.ultrablock.app.data.DnsProviderManager.getUpstreamAddress()
 
         while (shouldRun.get()) {
             try {
@@ -161,7 +161,16 @@ class UltraVpnService : VpnService() {
                     queriesProcessed.incrementAndGet()
 
                     val originatingPkg = getOriginatingPackage(packet, ihl)
-                    val isAdOrTracker = DomainFilter.isBlocked(question.domain, originatingPkg)
+                    val isSnoozed = com.ultrablock.app.data.SnoozeManager.isSnoozed()
+                    val isAdOrTracker = if (isSnoozed) false else DomainFilter.isBlocked(question.domain, originatingPkg)
+
+                    // Log to live query inspector
+                    com.ultrablock.app.data.QueryLogManager.recordQuery(
+                        domain = question.domain,
+                        packageName = originatingPkg,
+                        isBlocked = isAdOrTracker,
+                        reason = if (isSnoozed) "Shield Paused" else if (isAdOrTracker) "Sinkholed" else "Clean"
+                    )
 
                     val dnsResponseBytes: ByteArray? = if (isAdOrTracker) {
                         adsBlocked.incrementAndGet()
@@ -172,7 +181,8 @@ class UltraVpnService : VpnService() {
 
                         DnsPacketParser.buildSinkholeResponse(packet.copyOfRange(udpPayloadOffset, length), udpPayloadLen, endPos, question.qType)
                     } else {
-                        forwardQuery(upstreamSocket, packet, udpPayloadOffset, udpPayloadLen, upstreamDns)
+                        val currentUpstream = com.ultrablock.app.data.DnsProviderManager.getUpstreamAddress()
+                        forwardQuery(upstreamSocket, packet, udpPayloadOffset, udpPayloadLen, currentUpstream)
                     }
 
                     if (dnsResponseBytes != null) {

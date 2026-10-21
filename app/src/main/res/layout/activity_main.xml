@@ -11,34 +11,63 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="20dp">
 
-        <!-- Header -->
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Top Header & Brand -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="sans-serif-black"
-            android:letterSpacing="0.08"
-            android:text="ULTRABLOCK"
-            android:textColor="@color/accent_white"
-            android:textSize="26sp" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:letterSpacing="0.02"
-            android:text="System &amp; Smart TV Firewall &amp; Telemetry Sinkhole"
-            android:textColor="@color/text_secondary"
-            android:textSize="13sp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <!-- Power Button (D-Pad Focusable for Android TV Remote) -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:letterSpacing="0.08"
+                    android:text="ULTRABLOCK"
+                    android:textColor="@color/accent_white"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:letterSpacing="0.02"
+                    android:text="System &amp; Smart TV Firewall • Telemetry Sinkhole"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Upstream DNS Pill Badge -->
+            <TextView
+                android:id="@+id/btnChangeDns"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_pill_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="sans-serif-medium"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:text="DNS: 1.1.1.1 ▾"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- Main Power Shield Switch (TV & Touch Remote Friendly) -->
         <FrameLayout
             android:id="@+id/btnToggleShield"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_marginTop="28dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="22dp"
             android:background="@drawable/bg_shield_circle"
             android:clickable="true"
             android:focusable="true"
@@ -46,49 +75,101 @@
 
             <ImageView
                 android:id="@+id/imgShieldIcon"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_tile_shield"
-                app:tint="@color/accent_green" />
+                app:tint="@color/accent_white" />
         </FrameLayout>
 
         <TextView
             android:id="@+id/txtStatusTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-medium"
-            android:letterSpacing="0.05"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-bold"
+            android:letterSpacing="0.06"
             android:text="@string/shield_off"
             android:textColor="@color/accent_white"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txtStatusSubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="3dp"
             android:text="@string/status_subtitle"
             android:textColor="@color/text_secondary"
-            android:textSize="13sp" />
+            android:textSize="12sp" />
+
+        <!-- Quick Snooze / Pause Bar -->
+        <LinearLayout
+            android:id="@+id/layoutSnoozeBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btnSnooze5m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_pill_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="7dp"
+                android:text="Pause 5m"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/btnSnooze15m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_pill_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="7dp"
+                android:text="Pause 15m"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/btnSnooze1h"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_pill_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="7dp"
+                android:text="Pause 1h"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
 
         <!-- Stats Card Grid -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="18dp"
             android:orientation="horizontal">
 
+            <!-- Sinkholed Card -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
-                android:background="@color/card_dark"
+                android:background="@drawable/bg_hud_card"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="14dp">
+                android:padding="12dp">
 
                 <TextView
                     android:id="@+id/txtBlockedCount"
@@ -96,27 +177,29 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
                     android:text="0"
-                    android:textColor="@color/accent_green"
-                    android:textSize="20sp" />
+                    android:textColor="@color/accent_white"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
+                    android:fontFamily="sans-serif-medium"
                     android:text="SINKHOLED"
                     android:textColor="@color/text_secondary"
-                    android:textSize="11sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
+            <!-- Total Queries Card -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginHorizontal="3dp"
                 android:layout_weight="1"
-                android:background="@color/card_dark"
+                android:background="@drawable/bg_hud_card"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="14dp">
+                android:padding="12dp">
 
                 <TextView
                     android:id="@+id/txtProcessedCount"
@@ -125,60 +208,149 @@
                     android:fontFamily="sans-serif-black"
                     android:text="0"
                     android:textColor="@color/accent_white"
-                    android:textSize="20sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
+                    android:fontFamily="sans-serif-medium"
                     android:text="TOTAL QUERIES"
                     android:textColor="@color/text_secondary"
-                    android:textSize="11sp" />
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <!-- Block Rate % Card -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_hud_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/txtBlockRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="0%"
+                    android:textColor="@color/accent_white"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="BLOCK RATIO"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Button to open Per-App Blocked Statistics Window (Focusable for TV Remote) -->
-        <Button
-            android:id="@+id/btnOpenAppStats"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/card_dark"
-            android:focusable="true"
-            android:fontFamily="sans-serif-bold"
-            android:letterSpacing="0.04"
-            android:text="VIEW BLOCKED ADS PER APP"
-            android:textColor="@color/accent_green"
-            android:textSize="13sp" />
-
-        <!-- Last Blocked Info -->
-        <TextView
-            android:id="@+id/txtLastBlocked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ellipsize="middle"
-            android:singleLine="true"
-            android:text="Ready"
-            android:textColor="@color/text_secondary"
-            android:textSize="12sp" />
-
-        <!-- Firewall Category Toggles Section -->
-        <TextView
+        <!-- Action Buttons (Frosted Monochrome) -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btnOpenAppStats"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_pill_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="sans-serif-bold"
+                android:gravity="center"
+                android:letterSpacing="0.04"
+                android:text="BLOCKED APPS &amp; TOGGLES"
+                android:textColor="@color/accent_white"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/btnBatteryOpt"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_pill_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="sans-serif-bold"
+                android:gravity="center"
+                android:letterSpacing="0.04"
+                android:paddingHorizontal="14dp"
+                android:text="BATTERY FIX"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- Live Query Stream Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_hud_card"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
+                    android:letterSpacing="0.05"
+                    android:text="LIVE QUERY INSPECTOR"
+                    android:textColor="@color/accent_white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/txtClearLog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="CLEAR"
+                    android:textColor="@color/text_muted"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerQueryLogs"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginTop="10dp"
+                android:scrollbars="vertical" />
+        </LinearLayout>
+
+        <!-- Telemetry & Category Filters Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
             android:fontFamily="sans-serif-black"
             android:letterSpacing="0.06"
-            android:text="TELEMETRY &amp; SERVER FILTERS"
+            android:text="SYSTEM FIREWALL MODULES"
             android:textColor="@color/text_secondary"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@color/card_dark"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_hud_card"
             android:orientation="vertical"
             android:padding="8dp">
 
@@ -193,14 +365,15 @@
                 android:text="Block Smart TV &amp; Samba ACR Telemetry"
                 android:textColor="@color/accent_white"
                 android:textSize="13sp"
-                app:useMaterialThemeColors="false" />
+                app:thumbTint="@color/accent_white"
+                app:trackTint="#33FFFFFF" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/card_stroke" />
+                android:background="#14FFFFFF" />
 
-            <!-- Mobile & TV In-App Ad Networks (Google, Vungle, AppLovin, IronSource) -->
+            <!-- Mobile & TV In-App Ad Networks -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switchBlockInAppAds"
                 android:layout_width="match_parent"
@@ -211,14 +384,15 @@
                 android:text="Block In-App &amp; TV Ad Networks (Vungle / AppLovin / InMobi)"
                 android:textColor="@color/accent_white"
                 android:textSize="13sp"
-                app:useMaterialThemeColors="false" />
+                app:thumbTint="@color/accent_white"
+                app:trackTint="#33FFFFFF" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/card_stroke" />
+                android:background="#14FFFFFF" />
 
-            <!-- Mobile App Trackers (Flipkart, Swiggy, Zomato, Botim) -->
+            <!-- App Trackers -->
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switchBlockAppTrackers"
                 android:layout_width="match_parent"
@@ -226,15 +400,16 @@
                 android:focusable="true"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="8dp"
-                android:text="Block App Trackers (AppsFlyer / CleverTap / MoEngage / Adjust)"
+                android:text="Block App Trackers (AppsFlyer / CleverTap / MoEngage)"
                 android:textColor="@color/accent_white"
                 android:textSize="13sp"
-                app:useMaterialThemeColors="false" />
+                app:thumbTint="@color/accent_white"
+                app:trackTint="#33FFFFFF" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/card_stroke" />
+                android:background="#14FFFFFF" />
 
             <!-- WPS Office Switch -->
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -247,12 +422,13 @@
                 android:text="Block WPS Office / Kingsoft Servers"
                 android:textColor="@color/accent_white"
                 android:textSize="13sp"
-                app:useMaterialThemeColors="false" />
+                app:thumbTint="@color/accent_white"
+                app:trackTint="#33FFFFFF" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/card_stroke" />
+                android:background="#14FFFFFF" />
 
             <!-- Realme / Oppo Switch -->
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -265,12 +441,13 @@
                 android:text="Block Realme &amp; HeyTap Telemetry"
                 android:textColor="@color/accent_white"
                 android:textSize="13sp"
-                app:useMaterialThemeColors="false" />
+                app:thumbTint="@color/accent_white"
+                app:trackTint="#33FFFFFF" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/card_stroke" />
+                android:background="#14FFFFFF" />
 
             <!-- Meta / Facebook Switch -->
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -283,12 +460,13 @@
                 android:text="Block Meta / Facebook Graph &amp; Trackers"
                 android:textColor="@color/accent_white"
                 android:textSize="13sp"
-                app:useMaterialThemeColors="false" />
+                app:thumbTint="@color/accent_white"
+                app:trackTint="#33FFFFFF" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/card_stroke" />
+                android:background="#14FFFFFF" />
 
             <!-- Xiaomi / MIUI Switch -->
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -301,12 +479,13 @@
                 android:text="Block Xiaomi &amp; MIUI Telemetry"
                 android:textColor="@color/accent_white"
                 android:textSize="13sp"
-                app:useMaterialThemeColors="false" />
+                app:thumbTint="@color/accent_white"
+                app:trackTint="#33FFFFFF" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/card_stroke" />
+                android:background="#14FFFFFF" />
 
             <!-- ByteDance / TikTok Switch -->
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -319,8 +498,8 @@
                 android:text="Block ByteDance / TikTok Tracking"
                 android:textColor="@color/accent_white"
                 android:textSize="13sp"
-                app:useMaterialThemeColors="false" />
-
+                app:thumbTint="@color/accent_white"
+                app:trackTint="#33FFFFFF" />
         </LinearLayout>
 
     </LinearLayout>
