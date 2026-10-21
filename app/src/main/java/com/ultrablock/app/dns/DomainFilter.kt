@@ -157,6 +157,16 @@ object DomainFilter {
             return false
         }
 
+        // Custom Whitelist takes highest priority
+        if (com.ultrablock.app.data.CustomRuleManager.isWhitelisted(currentDomain)) {
+            return false
+        }
+
+        // Custom Blacklist takes second priority
+        if (com.ultrablock.app.data.CustomRuleManager.isBlacklisted(currentDomain)) {
+            return true
+        }
+
         // 1. Check custom toggle categories
         if (blockWps && matchesAny(currentDomain, CustomBlocklists.WPS_DOMAINS)) return true
         if (blockSmartTv && matchesAny(currentDomain, CustomBlocklists.SMART_TV_DOMAINS)) return true

@@ -14,9 +14,11 @@ import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.provider.Settings
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +26,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ultrablock.app.data.BlockStatsManager
+import com.ultrablock.app.data.CustomRuleManager
 import com.ultrablock.app.data.DnsProviderManager
+import com.ultrablock.app.data.OperationMode
+import com.ultrablock.app.data.OperationModeManager
+import com.ultrablock.app.data.QueryLogItem
 import com.ultrablock.app.data.QueryLogManager
 import com.ultrablock.app.data.SnoozeManager
 import com.ultrablock.app.data.UpstreamDns
@@ -44,6 +50,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var txtProcessedCount: TextView
     private lateinit var txtBlockRate: TextView
     private lateinit var btnChangeDns: TextView
+    private lateinit var btnChangeMode: TextView
     private lateinit var btnOpenAppStats: TextView
     private lateinit var btnOpenModules: TextView
     private lateinit var btnBatteryOpt: TextView
@@ -85,6 +92,8 @@ class MainActivity : AppCompatActivity() {
         BlockStatsManager.init(applicationContext)
         DnsProviderManager.init(applicationContext)
         SnoozeManager.init(applicationContext)
+        CustomRuleManager.init(applicationContext)
+        OperationModeManager.init(applicationContext)
 
         btnToggleShield = findViewById(R.id.btnToggleShield)
         imgShieldIcon = findViewById(R.id.imgShieldIcon)
@@ -94,6 +103,7 @@ class MainActivity : AppCompatActivity() {
         txtProcessedCount = findViewById(R.id.txtProcessedCount)
         txtBlockRate = findViewById(R.id.txtBlockRate)
         btnChangeDns = findViewById(R.id.btnChangeDns)
+        btnChangeMode = findViewById(R.id.btnChangeMode)
         btnOpenAppStats = findViewById(R.id.btnOpenAppStats)
         btnOpenModules = findViewById(R.id.btnOpenModules)
         btnBatteryOpt = findViewById(R.id.btnBatteryOpt)
@@ -104,7 +114,9 @@ class MainActivity : AppCompatActivity() {
 
         recyclerQueryLogs = findViewById(R.id.recyclerQueryLogs)
         recyclerQueryLogs.layoutManager = LinearLayoutManager(this)
-        queryLogAdapter = QueryLogAdapter(mutableListOf())
+        queryLogAdapter = QueryLogAdapter(mutableListOf()) { item ->
+            showDomainActionDialog(item)
+        }
         recyclerQueryLogs.adapter = queryLogAdapter
 
         btnToggleShield.setOnClickListener {
@@ -123,6 +135,10 @@ class MainActivity : AppCompatActivity() {
             showDnsSelectionDialog()
         }
 
+        btnChangeMode.setOnClickListener {
+            showModeSelectionDialog()
+        }
+
         btnSnooze5m.setOnClickListener { snoozeShield(5) }
         btnSnooze15m.setOnClickListener { snoozeShield(15) }
         btnSnooze1h.setOnClickListener { snoozeShield(60) }
@@ -137,11 +153,96 @@ class MainActivity : AppCompatActivity() {
         }
 
         updateDnsButtonText()
+        updateModeButtonText()
     }
 
     private fun updateDnsButtonText() {
         val prov = DnsProviderManager.currentProvider
-        btnChangeDns.text = "DNS: ${prov.ip} ▾"
+        val display = if (prov == UpstreamDns.CUSTOM) "CUSTOM: ${DnsProviderManager.customDnsIp}" else prov.displayName.substringBefore(" (")
+        btnChangeDns.text = "DNS: $display ▾"
+    }
+
+    private fun updateModeButtonText() {
+        val mode = OperationModeManager.currentMode
+        btnChangeMode.text = if (mode == OperationMode.ROOT_HOSTS) "MODE: ROOT ▾" else "MODE: VPN ▾"
+    }
+
+    private fun showModeSelectionDialog() {
+        val modes = OperationMode.values()
+        val names = modes.map { "${it.title}\n${it.desc}" }.toTypedArray()
+        val currentIndex = modes.indexOf(OperationModeManager.currentMode)
+
+        AlertDialog.Builder(this)
+            .setTitle("Select Operation Mode")
+            .setSingleChoiceItems(names, currentIndex) { dialog, which ->
+                val selected = modes[which]
+                if (selected == OperationMode.ROOT_HOSTS) {
+                    if (OperationModeManager.isRootAvailable()) {
+                        OperationModeManager.setMode(this, selected)
+                        updateModeButtonText()
+                        Toast.makeText(this, "Root mode enabled (KernelSU/Magisk)", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Root access (su) not found on device", Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    OperationModeManager.setMode(this, selected)
+                    updateModeButtonText()
+                }
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun showDomainActionDialog(item: QueryLogItem) {
+        val isWhitelisted = CustomRuleManager.isWhitelisted(item.domain)
+        val isBlacklisted = CustomRuleManager.isBlacklisted(item.domain)
+
+        val options = mutableListOf<String>()
+        if (isWhitelisted) {
+            options.add("Remove from Whitelist")
+        } else {
+            options.add("🟢 Always Allow / Whitelist")
+        }
+
+        if (isBlacklisted) {
+            options.add("Remove from Blacklist")
+        } else {
+            options.add("🔴 Always Block / Blacklist")
+        }
+
+        options.add("📋 Copy Domain Name")
+
+        AlertDialog.Builder(this)
+            .setTitle(item.domain)
+            .setItems(options.toTypedArray()) { _, which ->
+                when (options[which]) {
+                    "🟢 Always Allow / Whitelist" -> {
+                        CustomRuleManager.addWhitelist(this, item.domain)
+                        Toast.makeText(this, "Whitelisted ${item.domain}", Toast.LENGTH_SHORT).show()
+                    }
+                    "Remove from Whitelist" -> {
+                        CustomRuleManager.removeRule(this, item.domain)
+                        Toast.makeText(this, "Removed from Whitelist", Toast.LENGTH_SHORT).show()
+                    }
+                    "🔴 Always Block / Blacklist" -> {
+                        CustomRuleManager.addBlacklist(this, item.domain)
+                        Toast.makeText(this, "Blacklisted ${item.domain}", Toast.LENGTH_SHORT).show()
+                    }
+                    "Remove from Blacklist" -> {
+                        CustomRuleManager.removeRule(this, item.domain)
+                        Toast.makeText(this, "Removed from Blacklist", Toast.LENGTH_SHORT).show()
+                    }
+                    "📋 Copy Domain Name" -> {
+                        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                        val clip = android.content.ClipData.newPlainText("domain", item.domain)
+                        clipboard.setPrimaryClip(clip)
+                        Toast.makeText(this, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     private fun showDnsSelectionDialog() {
@@ -153,9 +254,33 @@ class MainActivity : AppCompatActivity() {
             .setTitle("Select Upstream DNS Resolver")
             .setSingleChoiceItems(names, currentIndex) { dialog, which ->
                 val selected = providers[which]
-                DnsProviderManager.setProvider(this, selected)
-                updateDnsButtonText()
                 dialog.dismiss()
+                if (selected == UpstreamDns.CUSTOM) {
+                    showCustomDnsPrompt()
+                } else {
+                    DnsProviderManager.setProvider(this, selected)
+                    updateDnsButtonText()
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun showCustomDnsPrompt() {
+        val input = EditText(this)
+        input.hint = "e.g. 45.90.28.0 or 192.168.1.100"
+        input.setText(DnsProviderManager.customDnsIp)
+
+        AlertDialog.Builder(this)
+            .setTitle("Enter Custom DNS IP")
+            .setMessage("Enter the IPv4 address of your private DNS, NextDNS, or local Pi-hole:")
+            .setView(input)
+            .setPositiveButton("Save") { _, _ ->
+                val ip = input.text.toString().trim()
+                if (ip.isNotEmpty()) {
+                    DnsProviderManager.setProvider(this, UpstreamDns.CUSTOM, ip)
+                    updateDnsButtonText()
+                }
             }
             .setNegativeButton("Cancel", null)
             .show()
@@ -212,6 +337,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun toggleShield() {
+        if (OperationModeManager.currentMode == OperationMode.ROOT_HOSTS) {
+            val currentlyActive = UltraVpnService.isRunning.get()
+            val willEnable = !currentlyActive
+            val success = OperationModeManager.applyRootHosts(this, willEnable)
+            if (success) {
+                UltraVpnService.isRunning.set(willEnable)
+                updateUiState()
+                Toast.makeText(this, if (willEnable) "Root hosts sinkhole active" else "Root hosts disabled", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Failed to apply root hosts rules", Toast.LENGTH_LONG).show()
+            }
+            return
+        }
+
         val running = UltraVpnService.isRunning.get()
         if (running) {
             val stopIntent = Intent(this, UltraVpnService::class.java).apply {

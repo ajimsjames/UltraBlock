@@ -13,8 +13,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class QueryLogAdapter(private val items: MutableList<QueryLogItem>) :
-    RecyclerView.Adapter<QueryLogAdapter.ViewHolder>() {
+class QueryLogAdapter(
+    private val items: MutableList<QueryLogItem>,
+    private val onItemClick: (QueryLogItem) -> Unit
+) : RecyclerView.Adapter<QueryLogAdapter.ViewHolder>() {
 
     private val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
 
@@ -52,6 +54,10 @@ class QueryLogAdapter(private val items: MutableList<QueryLogItem>) :
             badgeDrawable.setColor(ContextCompat.getColor(context, R.color.badge_allowed_bg))
         }
         holder.txtBadge.background = badgeDrawable
+
+        holder.itemView.setOnClickListener {
+            onItemClick(item)
+        }
     }
 
     override fun getItemCount(): Int = items.size

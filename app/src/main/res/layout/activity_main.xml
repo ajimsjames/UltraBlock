@@ -46,6 +46,22 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
+            <!-- Mode Pill Selector (VPN vs Root) -->
+            <TextView
+                android:id="@+id/btnChangeMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_glass_pill"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="sans-serif-bold"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="7dp"
+                android:text="MODE: VPN ▾"
+                android:textColor="@color/text_primary"
+                android:textSize="10sp" />
+
             <!-- Upstream DNS Pill Selector -->
             <TextView
                 android:id="@+id/btnChangeDns"
@@ -55,11 +71,11 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:fontFamily="sans-serif-medium"
-                android:paddingHorizontal="14dp"
+                android:paddingHorizontal="12dp"
                 android:paddingVertical="7dp"
                 android:text="DNS: 1.1.1.1 ▾"
                 android:textColor="@color/text_primary"
-                android:textSize="11sp" />
+                android:textSize="10sp" />
         </LinearLayout>
 
         <!-- Main Power Shield Switch -->
