@@ -1,506 +1,379 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_dark"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <!-- Scenic Nature Backdrop (Creates the genuine frosted glass refraction) -->
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingHorizontal="24dp"
-        android:paddingVertical="20dp">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_app_backdrop" />
 
-        <!-- Top Header & Brand -->
+    <!-- Dark Obsidian Slate Frosted Vignette -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#D9080B12" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-black"
-                    android:letterSpacing="0.08"
-                    android:text="ULTRABLOCK"
-                    android:textColor="@color/accent_white"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:letterSpacing="0.02"
-                    android:text="System &amp; Smart TV Firewall • Telemetry Sinkhole"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <!-- Upstream DNS Pill Badge -->
-            <TextView
-                android:id="@+id/btnChangeDns"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_pill_button"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="sans-serif-medium"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="6dp"
-                android:text="DNS: 1.1.1.1 ▾"
-                android:textColor="@color/text_secondary"
-                android:textSize="11sp" />
-        </LinearLayout>
-
-        <!-- Main Power Shield Switch (TV & Touch Remote Friendly) -->
-        <FrameLayout
-            android:id="@+id/btnToggleShield"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="22dp"
-            android:background="@drawable/bg_shield_circle"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackgroundBorderless">
-
-            <ImageView
-                android:id="@+id/imgShieldIcon"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_tile_shield"
-                app:tint="@color/accent_white" />
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/txtStatusTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="sans-serif-bold"
-            android:letterSpacing="0.06"
-            android:text="@string/shield_off"
-            android:textColor="@color/accent_white"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/txtStatusSubtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="@string/status_subtitle"
-            android:textColor="@color/text_secondary"
-            android:textSize="12sp" />
-
-        <!-- Quick Snooze / Pause Bar -->
-        <LinearLayout
-            android:id="@+id/layoutSnoozeBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/btnSnooze5m"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_pill_button"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="7dp"
-                android:text="Pause 5m"
-                android:textColor="@color/text_secondary"
-                android:textSize="11sp" />
-
-            <TextView
-                android:id="@+id/btnSnooze15m"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_pill_button"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="7dp"
-                android:text="Pause 15m"
-                android:textColor="@color/text_secondary"
-                android:textSize="11sp" />
-
-            <TextView
-                android:id="@+id/btnSnooze1h"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_pill_button"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="7dp"
-                android:text="Pause 1h"
-                android:textColor="@color/text_secondary"
-                android:textSize="11sp" />
-        </LinearLayout>
-
-        <!-- Stats Card Grid -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:orientation="horizontal">
-
-            <!-- Sinkholed Card -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_hud_card"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <TextView
-                    android:id="@+id/txtBlockedCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-black"
-                    android:text="0"
-                    android:textColor="@color/accent_white"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="SINKHOLED"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="10sp" />
-            </LinearLayout>
-
-            <!-- Total Queries Card -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="3dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_hud_card"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <TextView
-                    android:id="@+id/txtProcessedCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-black"
-                    android:text="0"
-                    android:textColor="@color/accent_white"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="TOTAL QUERIES"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="10sp" />
-            </LinearLayout>
-
-            <!-- Block Rate % Card -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_hud_card"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <TextView
-                    android:id="@+id/txtBlockRate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-black"
-                    android:text="0%"
-                    android:textColor="@color/accent_white"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="BLOCK RATIO"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="10sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Action Buttons (Frosted Monochrome) -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/btnOpenAppStats"
-                android:layout_width="0dp"
-                android:layout_height="42dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_pill_button"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="sans-serif-bold"
-                android:gravity="center"
-                android:letterSpacing="0.04"
-                android:text="BLOCKED APPS &amp; TOGGLES"
-                android:textColor="@color/accent_white"
-                android:textSize="11sp" />
-
-            <TextView
-                android:id="@+id/btnBatteryOpt"
-                android:layout_width="wrap_content"
-                android:layout_height="42dp"
-                android:background="@drawable/bg_pill_button"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="sans-serif-bold"
-                android:gravity="center"
-                android:letterSpacing="0.04"
-                android:paddingHorizontal="14dp"
-                android:text="BATTERY FIX"
-                android:textColor="@color/text_secondary"
-                android:textSize="11sp" />
-        </LinearLayout>
-
-        <!-- Live Query Stream Card -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_hud_card"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="14dp">
+            android:paddingHorizontal="22dp"
+            android:paddingVertical="20dp">
 
+            <!-- Top Header & Brand -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="sans-serif-black"
-                    android:letterSpacing="0.05"
-                    android:text="LIVE QUERY INSPECTOR"
-                    android:textColor="@color/accent_white"
-                    android:textSize="12sp" />
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:letterSpacing="0.08"
+                        android:text="ULTRABLOCK"
+                        android:textColor="#FFFFFF"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:letterSpacing="0.02"
+                        android:text="System &amp; Smart TV Firewall • Telemetry Sinkhole"
+                        android:textColor="#CBD5E1"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Upstream DNS Pill Selector -->
                 <TextView
-                    android:id="@+id/txtClearLog"
+                    android:id="@+id/btnChangeDns"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_glass_pill"
                     android:clickable="true"
                     android:focusable="true"
                     android:fontFamily="sans-serif-medium"
-                    android:text="CLEAR"
-                    android:textColor="@color/text_muted"
-                    android:textSize="10sp" />
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="7dp"
+                    android:text="DNS: 1.1.1.1 ▾"
+                    android:textColor="#FFFFFF"
+                    android:textSize="11sp" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerQueryLogs"
+            <!-- Main Power Shield Switch (Frosted 3D Glass Sphere) -->
+            <FrameLayout
+                android:id="@+id/btnToggleShield"
+                android:layout_width="144dp"
+                android:layout_height="144dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_shield_circle"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/imgShieldIcon"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_tile_shield"
+                    app:tint="#FFFFFF" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/txtStatusTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif-black"
+                android:letterSpacing="0.08"
+                android:text="@string/shield_off"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/txtStatusSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="@string/status_subtitle"
+                android:textColor="#94A3B8"
+                android:textSize="12sp" />
+
+            <!-- Quick Snooze / Pause Bar (Frosted Glass Pills) -->
+            <LinearLayout
+                android:id="@+id/layoutSnoozeBar"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_marginTop="10dp"
-                android:scrollbars="vertical" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btnSnooze5m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_glass_pill"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="7dp"
+                    android:text="Pause 5m"
+                    android:textColor="#E2E8F0"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/btnSnooze15m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_glass_pill"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="7dp"
+                    android:text="Pause 15m"
+                    android:textColor="#E2E8F0"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/btnSnooze1h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_glass_pill"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="7dp"
+                    android:text="Pause 1h"
+                    android:textColor="#E2E8F0"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Stats Card Grid (Frosted Glass Cards) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="horizontal">
+
+                <!-- Sinkholed Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_glass_card"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/txtBlockedCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:text="0"
+                        android:textColor="#FFFFFF"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="sans-serif-bold"
+                        android:letterSpacing="0.04"
+                        android:text="SINKHOLED"
+                        android:textColor="#94A3B8"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <!-- Total Queries Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_glass_card"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/txtProcessedCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:text="0"
+                        android:textColor="#FFFFFF"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="sans-serif-bold"
+                        android:letterSpacing="0.04"
+                        android:text="TOTAL QUERIES"
+                        android:textColor="#94A3B8"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <!-- Block Rate % Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_glass_card"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/txtBlockRate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:text="0%"
+                        android:textColor="#FFFFFF"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="sans-serif-bold"
+                        android:letterSpacing="0.04"
+                        android:text="BLOCK RATIO"
+                        android:textColor="#94A3B8"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Navigation Buttons (Frosted Monochrome) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btnOpenAppStats"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_glass_pill"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="sans-serif-bold"
+                    android:gravity="center"
+                    android:letterSpacing="0.04"
+                    android:text="BLOCKED APPS"
+                    android:textColor="#FFFFFF"
+                    android:textSize="11sp" />
+
+                <!-- Open Modules Page Button -->
+                <TextView
+                    android:id="@+id/btnOpenModules"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_marginHorizontal="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_glass_pill"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="sans-serif-bold"
+                    android:gravity="center"
+                    android:letterSpacing="0.04"
+                    android:text="FIREWALL MODULES →"
+                    android:textColor="#FFFFFF"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/btnBatteryOpt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="3dp"
+                    android:background="@drawable/bg_glass_pill"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="sans-serif-bold"
+                    android:gravity="center"
+                    android:letterSpacing="0.04"
+                    android:paddingHorizontal="12dp"
+                    android:text="BATTERY"
+                    android:textColor="#CBD5E1"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Live Query Stream Card (Frosted Glass Overlay) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_glass_card"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-black"
+                        android:letterSpacing="0.05"
+                        android:text="LIVE QUERY INSPECTOR"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtClearLog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_glass_pill"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="sans-serif-bold"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="CLEAR"
+                        android:textColor="#94A3B8"
+                        android:textSize="9sp" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerQueryLogs"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="10dp"
+                    android:scrollbars="vertical" />
+            </LinearLayout>
+
         </LinearLayout>
-
-        <!-- Telemetry & Category Filters Section -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:fontFamily="sans-serif-black"
-            android:letterSpacing="0.06"
-            android:text="SYSTEM FIREWALL MODULES"
-            android:textColor="@color/text_secondary"
-            android:textSize="11sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_hud_card"
-            android:orientation="vertical"
-            android:padding="8dp">
-
-            <!-- Smart TV ACR & Sony Bravia Telemetry -->
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchBlockSmartTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:text="Block Smart TV &amp; Samba ACR Telemetry"
-                android:textColor="@color/accent_white"
-                android:textSize="13sp"
-                app:thumbTint="@color/accent_white"
-                app:trackTint="#33FFFFFF" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#14FFFFFF" />
-
-            <!-- Mobile & TV In-App Ad Networks -->
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchBlockInAppAds"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:text="Block In-App &amp; TV Ad Networks (Vungle / AppLovin / InMobi)"
-                android:textColor="@color/accent_white"
-                android:textSize="13sp"
-                app:thumbTint="@color/accent_white"
-                app:trackTint="#33FFFFFF" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#14FFFFFF" />
-
-            <!-- App Trackers -->
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchBlockAppTrackers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:text="Block App Trackers (AppsFlyer / CleverTap / MoEngage)"
-                android:textColor="@color/accent_white"
-                android:textSize="13sp"
-                app:thumbTint="@color/accent_white"
-                app:trackTint="#33FFFFFF" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#14FFFFFF" />
-
-            <!-- WPS Office Switch -->
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchBlockWps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:text="Block WPS Office / Kingsoft Servers"
-                android:textColor="@color/accent_white"
-                android:textSize="13sp"
-                app:thumbTint="@color/accent_white"
-                app:trackTint="#33FFFFFF" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#14FFFFFF" />
-
-            <!-- Realme / Oppo Switch -->
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchBlockRealme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:text="Block Realme &amp; HeyTap Telemetry"
-                android:textColor="@color/accent_white"
-                android:textSize="13sp"
-                app:thumbTint="@color/accent_white"
-                app:trackTint="#33FFFFFF" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#14FFFFFF" />
-
-            <!-- Meta / Facebook Switch -->
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchBlockMeta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:text="Block Meta / Facebook Graph &amp; Trackers"
-                android:textColor="@color/accent_white"
-                android:textSize="13sp"
-                app:thumbTint="@color/accent_white"
-                app:trackTint="#33FFFFFF" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#14FFFFFF" />
-
-            <!-- Xiaomi / MIUI Switch -->
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchBlockXiaomi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:text="Block Xiaomi &amp; MIUI Telemetry"
-                android:textColor="@color/accent_white"
-                android:textSize="13sp"
-                app:thumbTint="@color/accent_white"
-                app:trackTint="#33FFFFFF" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#14FFFFFF" />
-
-            <!-- ByteDance / TikTok Switch -->
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchBlockBytedance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:text="Block ByteDance / TikTok Tracking"
-                android:textColor="@color/accent_white"
-                android:textSize="13sp"
-                app:thumbTint="@color/accent_white"
-                app:trackTint="#33FFFFFF" />
-        </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</FrameLayout>

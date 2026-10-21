@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Scenic Nature Backdrop (Matching Vision TV Launcher) -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_app_backdrop" />
+
+    <!-- Dark Frosted Blur Tint -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#D0080B12" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="22dp"
+            android:paddingVertical="24dp">
+
+            <!-- Back Nav Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_glass_pill"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="sans-serif-bold"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="7dp"
+                    android:text="← BACK"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
+                    android:letterSpacing="0.06"
+                    android:text="FIREWALL MODULES"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Configure granular telemetry, ad server, and OEM analytics sinkholing"
+                android:textColor="#CBD5E1"
+                android:textSize="12sp" />
+
+            <!-- Frosted Glass Module Container -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_glass_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <!-- Smart TV ACR & Sony Bravia Telemetry -->
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockSmartTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    android:text="Block Smart TV &amp; Samba ACR Telemetry"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#59FFFFFF" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#26FFFFFF" />
+
+                <!-- Mobile & TV In-App Ad Networks -->
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockInAppAds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    android:text="Block In-App &amp; TV Ad Networks (Vungle / AppLovin / InMobi)"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#59FFFFFF" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#26FFFFFF" />
+
+                <!-- App Trackers -->
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockAppTrackers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    android:text="Block App Trackers (AppsFlyer / CleverTap / MoEngage)"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#59FFFFFF" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#26FFFFFF" />
+
+                <!-- WPS Office Switch -->
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockWps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    android:text="Block WPS Office / Kingsoft Analytics"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#59FFFFFF" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#26FFFFFF" />
+
+                <!-- Realme / Oppo Switch -->
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockRealme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    android:text="Block Realme &amp; HeyTap Cloud Telemetry"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#59FFFFFF" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#26FFFFFF" />
+
+                <!-- Meta / Facebook Switch -->
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockMeta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    android:text="Block Meta / Facebook Graph &amp; Trackers"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#59FFFFFF" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#26FFFFFF" />
+
+                <!-- Xiaomi / MIUI Switch -->
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockXiaomi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    android:text="Block Xiaomi &amp; MIUI Telemetry"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#59FFFFFF" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#26FFFFFF" />
+
+                <!-- ByteDance / TikTok Switch -->
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchBlockBytedance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    android:text="Block ByteDance / TikTok Tracking"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:thumbTint="#FFFFFF"
+                    app:trackTint="#59FFFFFF" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

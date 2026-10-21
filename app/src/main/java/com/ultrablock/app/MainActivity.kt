@@ -24,7 +24,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ultrablock.app.data.BlockStatsManager
 import com.ultrablock.app.data.DnsProviderManager
 import com.ultrablock.app.data.QueryLogManager
@@ -33,6 +32,7 @@ import com.ultrablock.app.data.UpstreamDns
 import com.ultrablock.app.dns.DomainFilter
 import com.ultrablock.app.service.UltraVpnService
 import com.ultrablock.app.ui.AppStatsActivity
+import com.ultrablock.app.ui.ModulesActivity
 import com.ultrablock.app.ui.QueryLogAdapter
 
 class MainActivity : AppCompatActivity() {
@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var txtBlockRate: TextView
     private lateinit var btnChangeDns: TextView
     private lateinit var btnOpenAppStats: TextView
+    private lateinit var btnOpenModules: TextView
     private lateinit var btnBatteryOpt: TextView
     private lateinit var btnSnooze5m: TextView
     private lateinit var btnSnooze15m: TextView
@@ -54,15 +55,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerQueryLogs: RecyclerView
     private lateinit var queryLogAdapter: QueryLogAdapter
-
-    private lateinit var switchBlockSmartTv: SwitchMaterial
-    private lateinit var switchBlockInAppAds: SwitchMaterial
-    private lateinit var switchBlockAppTrackers: SwitchMaterial
-    private lateinit var switchBlockWps: SwitchMaterial
-    private lateinit var switchBlockRealme: SwitchMaterial
-    private lateinit var switchBlockMeta: SwitchMaterial
-    private lateinit var switchBlockXiaomi: SwitchMaterial
-    private lateinit var switchBlockBytedance: SwitchMaterial
 
     private val handler = Handler(Looper.getMainLooper())
     private val statsUpdater = object : Runnable {
@@ -104,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         txtBlockRate = findViewById(R.id.txtBlockRate)
         btnChangeDns = findViewById(R.id.btnChangeDns)
         btnOpenAppStats = findViewById(R.id.btnOpenAppStats)
+        btnOpenModules = findViewById(R.id.btnOpenModules)
         btnBatteryOpt = findViewById(R.id.btnBatteryOpt)
         btnSnooze5m = findViewById(R.id.btnSnooze5m)
         btnSnooze15m = findViewById(R.id.btnSnooze15m)
@@ -115,21 +108,16 @@ class MainActivity : AppCompatActivity() {
         queryLogAdapter = QueryLogAdapter(mutableListOf())
         recyclerQueryLogs.adapter = queryLogAdapter
 
-        switchBlockSmartTv = findViewById(R.id.switchBlockSmartTv)
-        switchBlockInAppAds = findViewById(R.id.switchBlockInAppAds)
-        switchBlockAppTrackers = findViewById(R.id.switchBlockAppTrackers)
-        switchBlockWps = findViewById(R.id.switchBlockWps)
-        switchBlockRealme = findViewById(R.id.switchBlockRealme)
-        switchBlockMeta = findViewById(R.id.switchBlockMeta)
-        switchBlockXiaomi = findViewById(R.id.switchBlockXiaomi)
-        switchBlockBytedance = findViewById(R.id.switchBlockBytedance)
-
         btnToggleShield.setOnClickListener {
             toggleShield()
         }
 
         btnOpenAppStats.setOnClickListener {
             startActivity(Intent(this, AppStatsActivity::class.java))
+        }
+
+        btnOpenModules.setOnClickListener {
+            startActivity(Intent(this, ModulesActivity::class.java))
         }
 
         btnChangeDns.setOnClickListener {
@@ -150,7 +138,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         updateDnsButtonText()
-        setupCategoryToggles()
     }
 
     private fun updateDnsButtonText() {
@@ -202,42 +189,6 @@ class MainActivity : AppCompatActivity() {
                 btnBatteryOpt.text = "OPTIMIZED"
                 btnBatteryOpt.setTextColor(Color.parseColor("#FFFFFF"))
             }
-        }
-    }
-
-    private fun setupCategoryToggles() {
-        switchBlockSmartTv.isChecked = DomainFilter.blockSmartTv
-        switchBlockInAppAds.isChecked = DomainFilter.blockInAppAds
-        switchBlockAppTrackers.isChecked = DomainFilter.blockAppTrackers
-        switchBlockWps.isChecked = DomainFilter.blockWps
-        switchBlockRealme.isChecked = DomainFilter.blockRealme
-        switchBlockMeta.isChecked = DomainFilter.blockMeta
-        switchBlockXiaomi.isChecked = DomainFilter.blockXiaomi
-        switchBlockBytedance.isChecked = DomainFilter.blockBytedance
-
-        switchBlockSmartTv.setOnCheckedChangeListener { _, isChecked ->
-            DomainFilter.updateToggle(this, DomainFilter.KEY_BLOCK_SMART_TV, isChecked)
-        }
-        switchBlockInAppAds.setOnCheckedChangeListener { _, isChecked ->
-            DomainFilter.updateToggle(this, DomainFilter.KEY_BLOCK_INAPP_ADS, isChecked)
-        }
-        switchBlockAppTrackers.setOnCheckedChangeListener { _, isChecked ->
-            DomainFilter.updateToggle(this, DomainFilter.KEY_BLOCK_APP_TRACKERS, isChecked)
-        }
-        switchBlockWps.setOnCheckedChangeListener { _, isChecked ->
-            DomainFilter.updateToggle(this, DomainFilter.KEY_BLOCK_WPS, isChecked)
-        }
-        switchBlockRealme.setOnCheckedChangeListener { _, isChecked ->
-            DomainFilter.updateToggle(this, DomainFilter.KEY_BLOCK_REALME, isChecked)
-        }
-        switchBlockMeta.setOnCheckedChangeListener { _, isChecked ->
-            DomainFilter.updateToggle(this, DomainFilter.KEY_BLOCK_META, isChecked)
-        }
-        switchBlockXiaomi.setOnCheckedChangeListener { _, isChecked ->
-            DomainFilter.updateToggle(this, DomainFilter.KEY_BLOCK_XIAOMI, isChecked)
-        }
-        switchBlockBytedance.setOnCheckedChangeListener { _, isChecked ->
-            DomainFilter.updateToggle(this, DomainFilter.KEY_BLOCK_BYTEDANCE, isChecked)
         }
     }
 

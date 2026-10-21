@@ -42,6 +42,11 @@
             android:exported="false"
             android:parentActivityName=".MainActivity" />
 
+        <activity
+            android:name=".ui.ModulesActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
+
         <service
             android:name=".service.UltraVpnService"
             android:permission="android.permission.BIND_VPN_SERVICE"
